@@ -1,3 +1,10 @@
 # AR/VR for the Web
 
-**A-Frame** https://aframe.io/
+** VR **
+  - **A-Frame** https://aframe.io/
+  - ** GUI VR ** https://github.com/rdub80/aframe-gui
+  
+** AR **
+  - ** AR.js ** https://github.com/jeromeetienne/AR.js
+
+
