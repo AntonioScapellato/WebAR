@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Eye Shooting Web VR game | Start</title>
+    <meta name="description" content="Web VR Game by Antonio Scapellato">
+    <meta name="author" content="Antonio Scapellato">
+     <script src="https://aframe.io/releases/1.0.3/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@^4.0.0/dist/aframe-event-set-component.min.js"></script>
+  </head>
+  <body>
+    <a-scene>
+
+      <!-- BASIC SETTINGS -->
+      <a-entity id="camera" camera="userHeight: 1.6" look-controls>
+        <a-cursor></a-cursor>
+      </a-entity>
+      <a-sky color="#222"></a-sky>
+
+      <a-entity text="font: mozillavr; value: This is a VR Game!"></a-entity>
+      <a-entity text="font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: Use the pointer to destroy the Object!"></a-entity>
+
+      <a-entity text="font: https://cdn.aframe.io/fonts/mozillavr.fnt; value: Hit to Begin!"
+                event-set__enter="_event: mouseenter; window.location.href = 'liv1.html';"
+      >
+      </a-entity>
+
+    </a-scene>
+  </body>
+</html>
