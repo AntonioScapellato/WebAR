@@ -18,14 +18,17 @@
       <!-- BASIC SETTINGS 
       <a-entity id="camera" camera="userHeight: 1.6" look-controls position="0 0 0">
         <a-cursor></a-cursor>
-      </a-entity>-->
+      </a-entity>
       <a-entity camera look-controls>
   <a-entity cursor="fuse: true; fuseTimeout: 500"
             position="0 0 -1"
             geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
             material="color: black; shader: flat">
   </a-entity>
-</a-entity>
+</a-entity>-->
+        <a-camera>
+    <a-cursor></a-cursor>
+  </a-camera>
       <a-sky color="#222"></a-sky>
 
       <!-- TEXT -->
