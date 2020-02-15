@@ -8,14 +8,17 @@
 
  <body>
    <a-scene light="type: ambient; color: #BBB;intensity: 0.05">
+     <a-plane position="0 -40 0" height="1000" width="1000" rotation="-90 0 0" color="#090909"></a-plane>
+
+
 
      <a-entity camera look-controls>
-     <a-entity cursor="fuse: true; fuseTimeout: 100"
+     <a-entity cursor="fuse: true; fuseTimeout: 1000"
                position="0 0 -1"
                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
-               material="color: black; shader: flat"
-               animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 1000; from: 0.1 0.1 0.1; to: 1 1 1;"
-              animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1000; from: 1 1 1; to: 0.1 0.1 0.1">
+               material="color: white; shader: flat"
+               animation__click="property: scale; startEvents: click; easing: easeInCubic; dur: 700; from: 3 3 3; to: 1 1 1;"
+              animation__fusing="property: scale; startEvents: fusing; easing: easeInCubic; dur: 1000; from: 1 1 1; to: 3 3 3">
 
      </a-entity>
    </a-entity>
@@ -24,72 +27,84 @@
     position= "0 2 -6"
 		width="2.5" height="0.75"
     animation="property: visible; to: false; startEvents: click"
+    onclick="game()" key-code="32"
 
-		value="START"
+		value="PLAY"
 		font-family="Arial"
 		margin="0 0 0.05 0">
 	</a-gui-button>
-  <a-entity
-    geometry="primitive: plane; width: 4; height: auto"
-    material="color: blue"
-    text="value: This text will be 4 units wide."></a-entity>
-
-  <!-- creo sfera -->
 
 
 
 <a-sky color="#101010"> </a-sky>
    </a-scene>
 
-   <script>
-   var point = 0;
-   var sceneEl = document.querySelector('a-scene');
-     var score= document.querySelector('a-text');
-   var entityEl = new Array();
+         <script>
 
-   var colors= new Array();
-   colors[0]='#84C9FB';
-   colors[1]='#FFF';
-   colors[2]='#600999';
+         function game() {
 
-   var shape= new Array();
-   shape[0]='box';
-   shape[1]='sphere';
-   shape[2]='cylinder';
-
-   for(var i=0; i<1000; i++)
-   {
-     //generazione posizione
-     var pos_x= Math.random() * (1000 - (-200)) + (-200);
-     var pos_y= Math.random() * (1000 - (-200)) + (-200);
-     var pos_z= Math.random() * (1000 - (-200)) + (-200);
-
-     // COLORI
-     var rand_colors = Math.random() * (2-0) + 0;
-     rand_colors = Math.round(rand_colors);
-
-     // FIGURE
-     var rand_shape = Math.random() * (2-0) + 0;
-     rand_shape = Math.round(rand_shape);
-
-    // CUBI + ANIMAZIONE + EVENTI
-    var entity= document.createElement('a-'+shape[rand_shape]);
-    entityEl[i]=entity;
-     entityEl[i].setAttribute('position', { x: pos_x, y: pos_y, z: pos_z });
-     entityEl[i].setAttribute('material', 'color', ''+colors[rand_colors]);
-     entityEl[i].setAttribute('animation', 'property: position; to: 1 1 1; dur: 100000; easing: linear');
-     entityEl[i].addEventListener('click', function(evt){
-       this.setAttribute('animation', 'property: visible; to: false');
-       point++;
-
-     });
-    sceneEl.appendChild(entityEl[i]);
-
-   }
+              var sceneEl = document.querySelector('a-scene');
+              var entityEl = new Array();
 
 
+           //PUNTEGGIO
+              var score=document.createElement('a-plane');
+              var punt=0;
+              score.setAttribute('position', { x: 0, y: 0, z: -2});
+              score.setAttribute('material', 'color', 'green');
+              score.setAttribute('text', 'value', 'SCORE: 0');
+              score.setAttribute('text', 'color', 'black');
+              score.setAttribute('text', 'align', 'center');
+              score.setAttribute('text', 'width', '8');
+              score.setAttribute('text', 'height', '5');
+              score.setAttribute('geometry', 'height', '2');
+              score.setAttribute('geometry', 'width', '2');
 
- </script>
+              sceneEl.appendChild(score);
+
+              var colors= new Array();
+              colors[0]='#84C9FB';
+              colors[1]='#FFF';
+              colors[2]='#600999';
+
+              var shape= new Array();
+              shape[0]='box';
+              shape[1]='sphere';
+              shape[2]='cylinder';
+
+              for(var i=0; i<30; i++)
+              {
+                //generazione posizione
+                var pos_x= Math.random() * (100 - (-50)) + (-50);
+                var pos_y= Math.random() * (100 - (1)) + (1);
+                var pos_z= Math.random() * (100 - (-50)) + (-50);
+
+                // COLORI
+                var rand_colors = Math.random() * (2-0) + 0;
+                rand_colors = Math.round(rand_colors);
+
+                // FIGURE
+                var rand_shape = Math.random() * (2-0) + 0;
+                rand_shape = Math.round(rand_shape);
+
+               // CUBI + ANIMAZIONE + EVENTI
+               var entity= document.createElement('a-'+shape[rand_shape]);
+               entityEl[i]=entity;
+                entityEl[i].setAttribute('position', { x: pos_x, y: pos_y, z: pos_z });
+                entityEl[i].setAttribute('material', 'color', ''+colors[rand_colors]);
+                entityEl[i].setAttribute('animation', 'property: position; to: 0 0 -4; dur: 70000; easing: linear');
+                entityEl[i].addEventListener('click', function(evt){
+                  this.setAttribute('animation', 'property: visible; to: false');
+                  punt++;
+                  score.setAttribute('text', 'value', 'SCORE: ' + punt);
+
+                });
+               sceneEl.appendChild(entityEl[i]);
+
+              }
+
+         }
+
+       </script>
   </body>
-
  </html>
