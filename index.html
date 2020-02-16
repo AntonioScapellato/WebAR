@@ -125,7 +125,7 @@ var scorecopy;
                entityElCopy[i]=entity;
                 entityEl[i].setAttribute('position', { x: pos_x, y: pos_y, z: pos_z });
                 entityEl[i].setAttribute('material', 'color', ''+colors[rand_colors]);
-                entityEl[i].setAttribute('animation', 'property: position; to: 0 0 0; dur: 7000; easing: linear');
+                entityEl[i].setAttribute('animation', 'property: position; to: 0 0 0; dur: 70000; easing: linear');
                 entityEl[i].addEventListener('click', function(evt){
                   this.sceneEl.removeChild(this);
                   punt++;
