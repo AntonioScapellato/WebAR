@@ -1,0 +1,162 @@
+<html>
+<head>
+  <title>deus | Eye Shooting</title>
+   <script src="https://aframe.io/releases/0.9.2/aframe.min.js"></script>
+   <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+   <meta name="apple-mobile-web-app-capable" content="yes">
+</head>
+
+ <body>
+   <a-scene light="type: ambient; color: #BBB;intensity: 0.05">
+
+     <a-assets>
+        <audio id="background" src="background.mp3" preload="auto" ></audio>
+        <audio id="boom" src="boom.mp3" preload="auto" ></audio>
+
+      </a-assets>
+
+
+
+     <a-plane position="0 -40 0" height="1000" width="1000" rotation="-90 0 0" color="#090909" ></a-plane>
+
+     <!-- Camera + cursor. -->
+      <a-entity id="cameraRig" position="0 1.6 0">
+        <a-camera look-controls wasd-controls position="0 0 0">
+          <a-gui-cursor id="cursor"
+                design="ring"
+                cursor="fuse: true; fuseTimeout: 1000; maxDistance=: 100"
+                position="0 0 -1"
+                geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                material="color: white; shader: flat"
+                raycaster="objects: .clickable">
+          </a-gui-cursor> <!-- /cursor -->
+        </a-camera> <!-- /camera -->
+      </a-entity>
+
+    <a-gui-button id="start"
+    position= "0 -2 0"
+		width="2.5" height="0.75"
+    onclick="game()" key-code="32"
+    rotation="-90 0 0"
+		value="PLAY"
+		font-family="Arial"
+		margin="0 0 0.05 0"
+    class="clickable" >
+	</a-gui-button>
+
+<a-sky color="#101010"> </a-sky>
+
+<a-entity  sound="src: #background" class="back"></a-entity>
+<a-entity  sound="src: #boom" class="boom"></a-entity>
+
+
+   </a-scene>
+
+         <script>
+
+var entityElCopy = new Array();
+
+var scorecopy;
+
+           var play=0;
+
+          function game() {
+
+
+
+              var sceneEl = document.querySelector('a-scene');
+
+              var background = document.querySelector('.back');
+              background.components.sound.playSound();
+              var boom = document.querySelector('.boom');
+
+
+
+
+              // RESET SCORE
+            if (play!=0) {reset();}
+
+            var entityEl = new Array();
+            var score=document.createElement('a-plane');
+                  scorecopy=score;
+            //PUNTEGGIO
+            score.setAttribute('position', { x: 0, y: 1, z: -2});
+            score.setAttribute('material', 'color', 'green');
+            score.setAttribute('text', 'value', 'SCORE: 0');
+            score.setAttribute('text', 'color', 'black');
+            score.setAttribute('text', 'align', 'center');
+            score.setAttribute('text', 'width', '8');
+            score.setAttribute('text', 'height', '5');
+            score.setAttribute('geometry', 'height', '2');
+            score.setAttribute('geometry', 'width', '2');
+            sceneEl.appendChild(score);
+
+              var colors= new Array();
+              colors[0]='#84C9FB';
+              colors[1]='#FFF';
+              colors[2]='#600999';
+
+              var shape= new Array();
+              shape[0]='box';
+              shape[1]='sphere';
+              shape[2]='cylinder';
+
+              var punt=0;
+            score.setAttribute('text', 'value', 'SCORE: ' + punt);
+
+              for(var i=0; i<30; i++)
+              {
+                //generazione posizione
+                var pos_x= Math.random() * (70 - (-50)) + (-50);
+                var pos_y= Math.random() * (70 - (1)) + (1);
+                var pos_z= Math.random() * (70 - (-50)) + (-50);
+
+                // COLORI
+                var rand_colors = Math.random() * (2-0) + 0;
+                rand_colors = Math.round(rand_colors);
+
+                // FIGURE
+                var rand_shape = Math.random() * (2-0) + 0;
+                rand_shape = Math.round(rand_shape);
+
+               // CUBI + ANIMAZIONE + EVENTI
+               var entity= document.createElement('a-'+shape[rand_shape]);
+               entityEl[i]=entity;
+               entityElCopy[i]=entity;
+                entityEl[i].setAttribute('position', { x: pos_x, y: pos_y, z: pos_z });
+                entityEl[i].setAttribute('material', 'color', ''+colors[rand_colors]);
+                entityEl[i].setAttribute('animation', 'property: position; to: 0 0 0; dur: 7000; easing: linear');
+                entityEl[i].addEventListener('click', function(evt){
+                  this.sceneEl.removeChild(this);
+                  punt++;
+                  score.setAttribute('text', 'value', 'SCORE: ' + punt);
+
+                  boom.components.sound.playSound();
+
+                });
+                //end function
+                entityEl[i].addEventListener('animationcomplete', function(evt){
+                  this.sceneEl.removeChild(this);
+                });
+                //end remove
+                entityEl[i].setAttribute('class','clickable');
+                sceneEl.appendChild(entityEl[i]);
+              }
+              //end for
+              play++;
+            }
+            //end game
+          function reset() {
+            for(var i=0; i<30; i++){
+              try{
+                 entityElCopy[i].sceneEl.removeChild(entityElCopy[i]);
+              }
+              catch(e){}
+
+         }
+         scorecopy.sceneEl.removeChild(scorecopy);
+
+          }
+       </script>
+  </body>
+ </html>
