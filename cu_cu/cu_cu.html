@@ -1,0 +1,264 @@
+<html>
+<head>
+  <title>CAOS VR | Escape Room</title>
+   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+   <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta charset="utf-8" />
+</head>
+    <body>
+        <a-scene >
+         <a-assets>  
+            <a-asset-item id="avatarObj" src="oggetti/avatar/avatar1.obj"></a-asset-item>
+            <a-asset-item id="avatarMtl" src="oggetti/avatar/avatar1.mtl"></a-asset-item>
+            <a-asset-item id="pianoObj" src="oggetti/piano/piano.obj"></a-asset-item>
+            <a-asset-item id="pianoMtl" src="oggetti/piano/piano.mtl"></a-asset-item>
+            
+            <a-img id="dorsoNapoli" src="immagini/dorsoNapoli.jpg"></a-img>
+
+
+         </a-assets>
+         <a-sky color="#2bb9ca"></a-sky>
+         <!-- MODELLI -->
+         <a-obj-model src="#pianoObj" mtl= "#pianoMtl " rotation="-90 0 0" position="4 -17 -9" ></a-obj-model>
+
+        <!--MAZZO-->
+         <a-box color="#737987" scale="0.5 0.5 1" position="0 -1 -4"></a-box>
+         <!--DORSO-->
+         <a-image src="#dorsoNapoli" rotation="90 90 0" position="0 -0.74 -4" scale="1 0.5 0.9"></a-image>
+
+        <!--CAMERA + CURSORE -0.3-->
+        <a-entity id="cameraRig" position="0 0 -0.3">
+            <a-camera look-controls wasd-controls position="0 0 0">
+            <a-gui-cursor id="cursor"
+                    design="ring"
+                    cursor="fuse: true; fuseTimeout: 1000; maxDistance=: 100"
+                    position="0 0 -1"
+                    geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                    material="color: black; shader: flat"
+                    raycaster="objects: .clickable">
+            </a-gui-cursor> <!-- /cursor -->
+            </a-camera> <!-- /camera -->
+        </a-entity>
+
+
+         <a-plane id='miacarta' class="clickable" color="green" position="0 4 -9"></a-plane>
+       
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 115 0" position="-6.5 -3 -6" scale="0.15 0.15 0.15" ></a-obj-model>
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 70 0" position="-8.5 -3 -11" scale="0.15 0.15 0.15" ></a-obj-model>
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 0 0" position="-0 -2.5 -19.5" scale="0.15 0.15 0.15" ></a-obj-model>
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 -90 0" position="8.5 -3 -9" scale="0.15 0.15 0.15" ></a-obj-model>
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 -130 0" position="6 -2.8 -5" scale="0.15 0.15 0.15" ></a-obj-model>
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 45 0" position="-4 -2.5 -19" scale="0.15 0.15 0.15" ></a-obj-model>
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 -45 0" position="4 -2.5 -18.5" scale="0.15 0.15 0.15" ></a-obj-model>
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 60 0" position="-7.2 -2.5 -15" scale="0.15 0.15 0.15" ></a-obj-model>
+         <a-obj-model id="ciccio" src="#avatarObj" mtl= "#avatarMtl " rotation="-90 -90 0" position="7.5 -2.8 -15" scale="0.15 0.15 0.15" ></a-obj-model>
+
+        </a-scene>
+<!--AVATAR-->
+        
+
+    <script>
+        var MAX_GIOCATORI = 5
+        var sceneEl= document.querySelector('a-scene');
+
+
+        //var ciccio=document.querySelector('#ciccio');
+        //var avatar= new Array();
+        //avatar[0]=ciccio;
+        //var i=0;
+        //sceneEl.appendChild(avatar[i]);
+        
+        var vero=0;
+
+    function game(){
+
+        
+        var scambiaEl=document.querySelector('#miacarta');
+
+        var usciti= new Array();
+        usciti[0]=-1;
+        var detto=0;
+        
+        var i=0;
+
+        //PESCA CARTA
+        var carta_pescata=-1;
+
+        function pesca(){
+           
+           var max= 39;
+           var min= 0;
+            i=0
+           var ricomincia=0;
+            //CERCO NUMERO RANDOM
+           carta_pescata= Math.floor(Math.random() * (max - min + 1)) + min;
+
+            //CONTROLLO SE è GIA USCITA QUELLA CARTA
+           for(i=0; usciti[i]!=-1; i++)
+           {
+               if(carta_pescata== usciti[i])
+               {
+                   ricomincia=1;
+               }
+           }
+           if(ricomincia==1)
+           {
+               carta_pescata=pesca();
+               return carta_pescata;
+           }
+
+           //AGGIORNO IL VETTORE DI CARTE GIA USCITE
+           usciti[i]= carta_pescata;
+           usciti[i+1]= -1;
+
+
+           //RESTITUISCE LA CARTA
+           return carta_pescata;
+        }
+        //END PESCA CARTA
+
+    //INIZIO: GIOCATORI PESCANO
+        var giocatore = new Array();
+
+
+        for(var k=0; k<MAX_GIOCATORI; k++)
+        {
+            giocatore[k]= pesca();
+             console.log('giocatore' + k + '=' + giocatore[k] );
+        }
+
+
+
+        //PORTA IL NUMERO A UNA CIFRA
+        var cifre= new Array();
+            for(var j=0; j<MAX_GIOCATORI;j++)
+            {
+                cifre[j]=giocatore[j] - Math.floor(giocatore[j]/10)*10; 
+                if(cifre[j]==0)
+                {
+                    cifre[j]=10;
+                }
+            }
+
+        //PASSA CARTA
+        function passa(sinistra, destra)
+        {
+            var passaggio;
+            passaggio = cifre[destra];
+            cifre[destra]= cifre[sinistra];
+            cifre[sinistra]= passaggio;
+            console.log(cifre[sinistra]);
+        }
+
+        //DECIDO SE CAMBIARE
+        function decido(carta_indecisa, giocatore_indeciso)
+        {
+               var scelta = Math.floor(Math.random()*1000);
+               if(scelta>(carta_indecisa*100))
+               {
+                   console.log(giocatore_indeciso +'cambio');
+                   if(giocatore_indeciso==MAX_GIOCATORI-1)
+                   {
+                    var nuova_carta = pesca();
+                    console.log('ULTIMO:' + nuova_carta);
+                    cifre[giocatore_indeciso]=nuova_carta - Math.floor(nuova_carta/10)*10;
+                   }
+                   else
+                   {
+                       if(cifre[giocatore_indeciso+1]==10)
+                       {
+                        console.log('CU CU');
+                        detto = 1;
+                       }
+                       else
+                       {
+                        passa(giocatore_indeciso, giocatore_indeciso+1);
+                       }
+                   }
+                  
+               }
+            
+            //END IF SCELTA
+        }
+        // END DECIDO
+
+
+
+ //TURNI SECONDA PARTE: FUNZIONE PER FINIRE IL TURNO
+   function continua()
+        {
+            for(i=vero+1;i<MAX_GIOCATORI;i++)
+            {
+                if(cifre[i]==10)
+                       {
+                           if(detto==0)
+                           {
+                            console.log('CU CU');
+                           }
+                       }
+                else
+                    {
+                        decido(cifre[i], i);
+                    }
+            }
+
+               //FINE: CONTROLLA PERDENTE
+        var minimo=Math.min(...cifre);
+        for(j=0;j<MAX_GIOCATORI;j++)
+        {
+            if(minimo==cifre[j])
+            {
+                console.log('giocatore' + (j+1) + 'HAI PERSO UNA VITA');
+            }
+        }
+
+
+        }
+
+        //TURNI PRIMA PARTE
+            for(var m=0;m<vero;m++)
+            {
+                if(cifre[m]==10)
+                       {
+                           if(detto==0)
+                           {
+                            console.log('CU CU');
+                           }
+                       }
+                else
+                    {
+                        decido(cifre[m], m);
+                    }
+                }
+
+                
+           //SE GIOCATORE VERO VUOLE SCAMBIARE
+           scambiaEl.addEventListener('click', function(evt){
+                            //SE DEVO CAMBIARE COL MAZZO
+                            if(vero==MAX_GIOCATORI-1)
+                                {
+                                    var nuova_carta_vera = pesca();
+                                    console.log('ULTIMO:' + nuova_carta_vera);
+                                    cifre[vero]=nuova_carta_vera - Math.floor(nuova_carta_vera/10)*10;
+                                }
+                                
+                            //SE DEVO CAMBIARE CON UN BOT
+                            else
+                            {
+                                passa(m, m+1);
+                            }  
+
+                            continua(); 
+
+                        });
+                        //END CAMBIO
+    }
+    //END GAME
+
+    </script>
+
+
+
+
+</html>
