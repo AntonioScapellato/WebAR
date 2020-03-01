@@ -223,7 +223,7 @@ var mano1= document.querySelector('#mano1');
 
 
 cliccaBuco1.addEventListener('click', function(evt){
-    io.setAttribute('animation', 'property: position; to: -4.6 3 6; dur:5000; easing:linear');
+    io.setAttribute('animation', 'property: position; to: -4.6 0 6; dur:5000; easing:linear');
     mano2.setAttribute('visible', 'false');
     mano1.setAttribute('rotation', { x: 180, y: 0, z: 0});
     mano1.emit("sposta1");
@@ -287,7 +287,7 @@ var cliccaBuco2=document.querySelector('#cliccabuco2');
 
 cliccaBuco2.addEventListener('click', function(evt){
     mano2.emit("sposta2");
-    io.setAttribute('animation', 'property: position; to: -4.800 3 6; dur:5000; easing:linear');
+    io.setAttribute('animation', 'property: position; to: -4.800 0 6; dur:5000; easing:linear');
     mano1.setAttribute('visible', 'false');
     mano2.setAttribute('rotation', { x: 180, y: 180, z: 0});
     //mano2.setAttribute('animation', 'property: position; to: -5.050 2.895 5.970; dur:5000; easing:linear');
