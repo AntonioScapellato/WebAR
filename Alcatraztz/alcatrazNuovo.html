@@ -1635,7 +1635,7 @@ muro_plane2.addEventListener('click', function(evt){
 });
 //VITTORIA
 muro_planeOk.addEventListener('click', function(evt){
-  if(muro[0]==0 && muro[1]== 0 && muro[2]==0)
+  if(muro[0]==5 && muro[1]== 4 && muro[2]==5)
   {
     //nascondiBuco.setAttribute('animation', 'property: position; to: -4.494 1 5.914; dur:5000; easing:linear')
     nascondiBuco.setAttribute('animation', 'property: visible; to: false; dur:5000; delay: 500; easing:linear');
@@ -2727,7 +2727,7 @@ lockOut1Dentro.addEventListener('click', function(){
         sbloccaLucchetti++;
     }
 
-    if(sbloccaLucchetti>=0)
+    if(sbloccaLucchetti>=2)
     {
 
         lockOut1Dentro.setAttribute('class', 'not-clickable');
@@ -2771,7 +2771,7 @@ lockOut2Dentro.addEventListener('click', function(){
 
     }
 
-    if(sbloccaLucchetti>=0)
+    if(sbloccaLucchetti>=2)
 {         
 
     lockOut2Dentro.setAttribute('class', 'not-clickable');
