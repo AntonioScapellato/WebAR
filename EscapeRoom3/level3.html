@@ -1,0 +1,2049 @@
+<html>
+<head>
+  <title>CAOS VR | Escape Room</title>
+   <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+   <script src="https://rawgit.com/rdub80/aframe-gui/master/dist/aframe-gui.min.js"></script>
+   <meta name="apple-mobile-web-app-capable" content="yes">
+   <meta charset="utf-8" />
+</head>
+    <body>
+        <a-scene scale="10 10 10">
+         <a-assets>  
+            <a-asset-item id="bedObj" src="oggetti/letto.obj"></a-asset-item>
+            <a-asset-item id="bedMtl" src="oggetti/letto.mtl"></a-asset-item>
+
+            
+            <a-asset-item id="bucoKeyObj" src="oggetti/bucoKey.obj"></a-asset-item>
+            <a-asset-item id="bucoKeyMtl" src="oggetti/bucoKey.mtl"></a-asset-item>
+
+            <a-asset-item id="cdKeyObj" src="oggetti/cdKey.obj"></a-asset-item>
+            <a-asset-item id="cdKeyMtl" src="oggetti/cdKey.mtl"></a-asset-item>
+
+            
+            <a-asset-item id="radLockObj" src="oggetti/morseLock.obj"></a-asset-item>
+            <a-asset-item id="radLockMtl" src="oggetti/morseLock.mtl"></a-asset-item>
+
+            
+            <a-asset-item id="lockOutObj" src="oggetti/lockOut.obj"></a-asset-item>
+            <a-asset-item id="lockOutMtl" src="oggetti/lockOut.mtl"></a-asset-item>
+
+            
+            <a-asset-item id="manoObj" src="oggetti/mano.obj"></a-asset-item>
+            <a-asset-item id="manoMtl" src="oggetti/mano.mtl"></a-asset-item>
+
+            <!--SCATOLE-->
+            <a-asset-item id="scaffaleObj" src="oggetti/scatola.obj"></a-asset-item>
+            <a-asset-item id="scaffaleMtl" src="oggetti/scatola.mtl"></a-asset-item>
+            
+            <a-asset-item id="prigioniero2Obj" src="oggetti/prigioniero2.obj"></a-asset-item>
+            <a-asset-item id="prigioniero2Mtl" src="oggetti/prigioniero2.mtl"></a-asset-item>
+
+            
+            <a-asset-item id="prigioniero1Obj" src="oggetti/prigioniero0.obj"></a-asset-item>
+            <a-asset-item id="prigioniero1Mtl" src="oggetti/prigioniero0.mtl"></a-asset-item>
+
+            <a-asset-item id="prigioniero3Obj" src="oggetti/prigioniero3.obj"></a-asset-item>
+            <a-asset-item id="prigioniero3Mtl" src="oggetti/prigioniero3.mtl"></a-asset-item>
+
+            <a-asset-item id="prigioniero4Obj" src="oggetti/prigioniero4.obj"></a-asset-item>
+            <a-asset-item id="prigioniero4Mtl" src="oggetti/prigioniero4.mtl"></a-asset-item>
+
+
+            
+
+            <a-asset-item id="radioObj" src="oggetti/radio.obj"></a-asset-item>
+            <a-asset-item id="radioMtl" src="oggetti/radio.mtl"></a-asset-item>
+
+            
+            <a-asset-item id="tableGltf" src="oggetti/table.gltf"></a-asset-item>
+
+
+
+
+            
+            <a-asset-item id="batteryGltf" src="oggetti/battery.gltf"></a-asset-item>
+
+
+            <audio id="morse" src="suoni/morse.mp3"></audio>
+            <audio id="openDoor" src="suoni/openDoor.mp3"></audio>
+            <audio id="openLock" src="suoni/openLock.mp3"></audio>
+            <audio id="sparisceBuco" src="suoni/spariscebuco.mp3"></audio>
+            <audio id="wallFall" src="suoni/wallFall.wav"></audio>
+
+            <audio id="beep" src="suoni/beep.wav" ></audio>
+
+            <audio id="corretto" src="suoni/correct.wav" ></audio>
+            <audio id="sbagliato" src="suoni/wrong.mp3" ></audio>
+
+            <audio id="scorre" src="suoni/scorre.wav"></audio>
+
+
+                        <audio id="rains" src="suoni/rain.wav"></audio>
+
+
+
+
+
+
+
+       <a-asset-item id="clockGltf" src="oggetti/clock.gltf"></a-asset-item>
+
+
+
+
+
+
+
+
+
+
+
+
+
+             <img id="buco" src="immagini/buco.png">
+             <img id="nascondiBuco" src="immagini/nascondiBuco.png">
+
+             <img id="croce" src="immagini/croce.jpg">
+
+             <img id="portaPrigione" src="immagini/portaPrigione.jpg">
+             <img id="crepa" src="immagini/CrepaMuro.png">
+            <img id="stelle" src="immagini/fuori/prova.jpg">
+
+
+
+
+         </a-assets>
+
+         
+<a-entity sound="src: #rains; volume: 3; loop: true; autoplay: true" class="pioggia"></a-entity>
+        </a-entity><!--CAMERA + CURSORE -0.3    -9.710 3 -15.556-->
+        <a-entity id="cameraRig" position="0 3 0">
+            <a-camera look-controls wasd-controls position="0 0 0">
+            <a-gui-cursor id="cursor"
+                    design="ring"
+                    cursor="fuse: true; fuseTimeout: 1000; maxDistance=: 100"
+                    position="0 0 -1"
+                    geometry="primitive: ring; radiusInner: 0.02; radiusOuter: 0.03"
+                    material="color: black; shader: flat"
+                    raycaster="objects: .clickable">
+            </a-gui-cursor> <!-- /cursor -->
+            </a-camera> <!-- /camera -->
+        </a-entity>
+
+    <!--SUONI-->
+    <a-entity  sound="src: #sparisceBuco; volume: 0.0001" class="sparisceb"></a-entity>
+    
+    <a-entity  sound="src: #wallFall; volume: 0.0001" class="wallf"></a-entity>
+
+    <a-sky id="cielo" src="#stelle"></a-sky>
+   
+
+    <!--MODELLI-->
+    <a-obj-model id="letto1" src="#bedObj" mtl="#bedMtl" scale="-0.028 0.020 0.020" position="1.209 1.038 3.854" rotation="0 0 0" ></a-obj-model>
+    <a-obj-model id="letto2" src="#bedObj" mtl="#bedMtl" scale="-0.028 0.020 0.020" position="-10.601 1.038 3.854" rotation="0 0 0" ></a-obj-model>
+    <a-obj-model id="letto3" src="#bedObj" mtl="#bedMtl" scale="-0.028 0.020 0.020" position="1.209 1.038 -33.986" rotation="0 0 0" onclick="batteriaVisibile()"  animation="property: position; dur:5000; to: -1.731 1.038 -33.986; easing: linear; startEvents: click" ></a-obj-model>
+    <a-obj-model id="letto4" src="#bedObj" mtl="#bedMtl" scale="-0.028 0.020 0.020" position="-23.601 1.038 -33.986" rotation="0 0 0" ></a-obj-model>
+
+    
+    <a-obj-model id="mano1" src="#manoObj" mtl="#manoMtl" scale="0.052 0.010 0.020" position="0.030 2.705 -0.310" rotation="180 90 0" animation="property: position; to: -4.270 2.895 6.060; dur:5000; easing:linear; startEvents: sposta1" ></a-obj-model>
+    <a-obj-model id="mano2" visible="false" src="#manoObj" mtl="#manoMtl" scale="0.052 0.010 0.020" position="-10.000 2.705 2.380" rotation="180 -90 0" animation="property: position; to: -5.050 2.895 5.970; dur:5000; easing:linear; startEvents: sposta2" ></a-obj-model>
+    <a-obj-model id="prigioniero2"  src="#prigioniero2Obj" mtl="#prigioniero2Mtl" scale="0.050 0.050 0.050" position="-10.870 0.430 0.594" rotation="-90 106.450 0"></a-obj-model>
+    <a-obj-model id="prigioniero1" visible="false" src="#prigioniero1Obj" mtl="#prigioniero1Mtl" scale="0.050 0.050 0.050" position="0.560 0.430 0.614" rotation="-90 -106.400 0" ></a-obj-model>
+   
+
+
+    <a-entity id="table" gltf-model="#tableGltf" position="1.360 -2.442 -13.380" scale="0.023 -0.020 0.020" rotation="-90 90 0"></a-entity>
+
+<!--OROLOGIO 15:40-->
+    <a-entity id="batteria" visible="false" gltf-model="#batteryGltf" position="2.400 0.520 -32.580" scale="50.000 46.740 38.900" rotation="-90 90 0" class="clickable" animation="property: visible; to: false; startEvents: click"></a-entity>
+    <a-entity id="clock" gltf-model="#clockGltf" position="-7.790 -4.950 2.271" scale="5.000 5.000 5.000" rotation="0 -90 0" sound="src: #corretto; volume: 0.0001" class="corr"></a-entity>
+        <a-box color="#654321" position="-5.530 1.500 0.910" scale="1.190 2.510 4.830" ></a-box>
+        <a-plane id="orologio" material="visible: false" position="-5.660 3.470 0.770" rotation="0 -90 0" scale="1.480 1.190 1" text="color:#121212; font: mozillavr; value: 00:00; width: 8.960; align: center; anchor: align; baseline: bottom" sound="src: #sbagliato; volume: 0.0001" class="wrong"></a-plane>
+        <a-plane visible="false" class="clickable" position="-5.750 3.980 0.770" scale="0.670 0.310 0.500" rotation="0 -90 0" onclick="cambiaOrologio()"></a-plane>
+       
+       
+        
+
+
+
+    <!--PRIMA CHIAVE PER BUCO-->
+
+    <a-plane id="bucoKeyFinto" visible="false" scale="0.740 2 1.000" position="-0.010 8.99 0.300" rotation="90 0 0"  class="clickable"></a-plane>
+    <a-obj-model id="bucokey" src="#bucoKeyObj" mtl="#bucoKeyMtl" scale="0.114 0.060 -0.120" position="0 9.000 1" rotation="0 0 0" ></a-obj-model>
+    <a-plane id="nascondibucokey"src="#crepa" onclick="wallFall()" position="-0.010 8.950 0.300" scale="0.740 2 1.000" rotation="90 0 0" class="clickable" ></a-plane>
+    <a-plane id="cliccabuco1" visible="false" position="-4.700 2.839 5.914" rotation="0 90 0"></a-plane>
+    <a-plane id="cliccabuco2" class="clickable" visible="false" position="-4.750 2.895 5.970" rotation="0 -90 0"></a-plane>
+    <a-image id="nascondibuco1" src="#nascondiBuco" position="-4.494 2.839 5.914" rotation="0 90 0"></a-image>
+
+    
+    <!--CODICE MORSE-->
+    <a-obj-model id="cdBackground" src="#scaffaleObj" mtl="#scaffaleMtl" scale="0.064 0.150 0.040" position="5.468 2.283 0.308" rotation="0 -90 0" ></a-obj-model>
+    
+    <a-plane id="cdporta"  color="#009fd7" position="4.663 1.421 -0.342" scale="1.484 1.709 0.837" rotation="0 -90 0" text="value: OK; align:center; color:#b0362b; width: 12; height: 12" class="clickable"></a-plane>
+
+
+    <a-plane id="cd1" color="#009fd7" position="4.663 2.871 -0.802" scale="0.484 0.419 0.837" rotation="0 -90 0" class="clickable"></a-plane>
+    <a-plane id="cd2" color="#009fd7" position="4.663 2.871 -0.332" scale="0.484 0.419 0.837" rotation="0 -90 0" class="clickable"></a-plane>
+    <a-plane id="cd3" color="#009fd7" position="4.663 2.871 0.118" scale="0.484 0.419 0.837" rotation="0 -90 0" class="clickable"></a-plane>
+    <a-plane id="cd4" color="#009fd7" position="4.663 2.491 -0.802" scale="0.484 0.419 0.837" rotation="0 -90 0" class="clickable"></a-plane>
+    <a-plane id="cd5" color="#009fd7" position="4.663 2.491 -0.342" scale="0.484 0.419 0.837" rotation="0 -90 0" class="clickable"></a-plane>
+    <a-plane id="cd6" color="#009fd7" position="4.663 2.491 0.118" scale="0.484 0.419 0.837" rotation="0 -90 0" class="clickable"></a-plane>
+
+    <a-obj-model id="cdkey" src="#cdKeyObj" mtl="#cdKeyMtl" scale="0.114 0.060 -0.120" position="4.790 0.620 -0.100" rotation="0 0 0" ></a-obj-model>
+    <a-plane id="cdKeyFinto" visible="false" scale="0.770 1.410 0.000" position="5.060 0.600 -0.320" rotation="-90 0 0"  class="clickable"></a-plane>
+
+
+        <!--RADIO-->
+        <a-obj-model id="radScatola" src="#scaffaleObj" mtl="#scaffaleMtl" scale="0.094 0.220 0.040" position="-15.628 3.173 0.308" rotation="0 90 0" ></a-obj-model>
+        <a-plane id="radPorta"
+     sound="src: #openDoor; volume: 0.0001" color="#009fd7" position="-14.813 2.531 1.268" scale="2.354 4.329 0.717" rotation="0 90 0"></a-plane>
+        <a-obj-model id="radLock" src="#radLockObj" mtl="#radLockMtl" scale="0.144 0.190 -0.100" position="-14.409 0.771 0.128" rotation="128.410 -90.000 0" ></a-obj-model>
+        <a-obj-model id="radio" src="#radioObj" mtl="#radioMtl" scale="0.990 0.900 0.910" position="-14.893 2.010 1.230" rotation="0 -82.470 0" onclick="morse()"></a-obj-model>
+        <a-entity  sound="src: #morse; volume: 0.0001" class="codice"></a-entity>
+
+
+    <!--BACKGROUND-->
+  
+    <a-image id="buco" src="#buco" position="-4.700 4.550 1.020" scale="11.790 9.170 1.000" rotation="0 90 0" >
+    <a-entity position="-0.480 0.290 0" material="border: red" text="value: If you close your hand, it disappears: \n\n\nEven if it's yours, you don't use it: \n\n\nYou can make them nice or bad, \nbut you cannot show them to anyone: ; align: left; anchor: align; baseline: center; color:#b0362b; font: mozillavr; border: none;border-color: transparent;"></a-entity>
+</a-image>
+
+<a-plane id="tetto12" color="#333333" position="-4.725 9.080 1.020" scale="22.480 11.800 1.000" rotation="90 0 0"></a-plane>
+
+
+
+
+
+
+    <!--STANZA 1-->
+<a-plane id="piano1" color="#333333" position="-11.205 0.350 -10.660" scale="1000 1000 1.000" rotation="-90 0 0"></a-plane>
+<a-plane id="pareteDietro1" color="#333333" position="0.830 4.708 6.874" scale="11.190 8.890 1.000" rotation="0 180 0"></a-plane>
+
+<a-plane id="parteSinistra1" color="#333333" position="6.376 4.540 1.210" scale="12.250 9.170 1.000" rotation="0 -90 0"></a-plane>
+<a-box id="veroButton1" visible="false" position="6.690 0.040 0.500"  sound="src: #beep; volume: 0.0001; distanceModel: exponential" class="beep1" ></a-box>
+
+<a-sphere id="button1" position="0 8.270 -4.580" scale="0.300 0.300 0.300" sound="src: #beep; distanceModel: exponential; volume: 0.0001" class="premiBeep1" onclick="premiBeep1()" ></a-sphere>
+
+<a-plane id="teletrasportoStanza1" visible="false" position="1.900 1.510 -4.700" scale="1.820 2.080 1" rotation="0 180 0" onclick="openLock1F()" ></a-plane>
+
+    <!--STANZA 2-->
+    <a-plane id="pareteDietro2" color="#333333" position="-10.260 4.708 6.874" scale="11.190 8.890 1.000" rotation="0 180 0"></a-plane>
+    <a-plane id="pareteSinistra2" color="#333333" position="-15.626 4.540 1.210" scale="12.250 9.170 1.000" rotation="0 90 0"></a-plane>
+    <a-box id="veroButton2" visible="false" position="-12.930 0 1.420"  sound="src: #beep; volume: 0.0001; distanceModel: exponential" class="beep2" ></a-box>
+
+    <a-sphere id="button2" position="-11.050 8.270 -4.540" scale="0.300 0.300 0.300" sound="src: #beep; distanceModel: exponential; volume: 0.0001 " class="premiBeep2" onclick="premiBeep2()" ></a-sphere>
+
+    <a-plane id="teletrasportoStanza2" visible="false" position="-7.750 1.350 -4.690" scale="1.820 2.080 1" rotation="0 180 0" onclick="openLock2F()" ></a-plane>
+
+
+    <!--STANZA 3-->
+    <a-plane id="pareteSinistra3" color="#333333" position="6.376 4.540 -28.670" scale="12.250 9.170 1.000" rotation="0 -90 0"></a-plane>
+    <a-plane id="pareteDietro3" color="#333333" position="0.830 4.708 -34.506" scale="11.190 8.880 1.000" rotation="0 0 0"></a-plane>
+    <a-plane id="pareteDestraFuori3" color="#333333" position="-4.700 4.540 -28.590" scale="12.250 9.170 1.000" rotation="0 -90 0"></a-plane>
+    <a-plane id="pareteDestraDentroi3" color="#333333" position="-4.700 4.540 -28.590" scale="12.250 9.170 1.000" rotation="0 90 0"></a-plane>
+    <a-plane id="Tetto3" color="#333333" position="0.825 9.080 -28.650" scale="11.040 12.180 1.000" rotation="90 0 0"></a-plane>
+
+    <a-box id="veroButton3" visible="false" position="0 0 -33.920" sound="src: #beep; volume: 0.0001; distanceModel: exponential" class="beep3" ></a-box>
+
+    <a-sphere id="button3" position="0 8.270 -22.650" scale="0.300 0.300 0.300" sound="src: #beep; distanceModel: exponential; volume: 0.0001 " class="premiBeep3" onclick="premiBeep3()" ></a-sphere>
+
+    <a-plane id="teletrasportoStanza3" visible="false" scale="1.740 2.370 1" position="3.560 1.490 -22.150"  onclick="openLock3F()" ></a-plane>
+    <a-plane id="esciStanza3" visible="false" class="clickable" scale="1.350 2.130 1" position="-3.300 1.600 -23.320" rotation="0 180 0" onclick="openLock3D()"></a-plane>
+
+
+    <!--STANZA 4-->
+    <a-plane id="pareteSinistraFuori4" color="#333333" position="-17.324 4.540 -28.670" scale="12.250 9.170 1.000" rotation="0 -90 0"></a-plane>
+    <a-plane id="pareteSinistraDentro4" color="#333333" position="-17.324 4.540 -28.670" scale="12.250 9.170 1.000" rotation="0 90 0"></a-plane>
+
+    <a-plane id="pareteDietro4" color="#333333" position="-22.930 4.708 -34.506" scale="11.190 8.880 1.000" rotation="0 0 0"></a-plane>
+    <a-plane id="pareteDestra4" color="#333333" position="-28.320 4.540 -28.590" scale="12.250 9.170 1.000" rotation="0 90 0"></a-plane>
+    <a-plane id="pareteDestra4" color="#333333" position="-28.320 4.540 -28.590" scale="12.250 9.170 1.000" rotation="0 -90 0"></a-plane>
+    <a-plane id="Tetto4" color="#333333" position="-22.835 9.080 -28.650" scale="11.040 12.180 1.000" rotation="90 0 0"></a-plane>
+
+    <a-box id="veroButton4" visible="false" position="-23.710 0 -33.880" sound="src: #beep; volume: 0.0001; distanceModel: exponential" class="beep4"></a-box>
+
+    <a-sphere id="button4" position="-23.750 8.270 -22.690" scale="0.300 0.300 0.300" sound="src: #beep; distanceModel: exponential;volume: 0.0001 " onclick="premiBeep4()" ></a-sphere>
+
+    <a-plane id="teletrasportoStanza4" visible="false" scale="1.010 1.350 1" position="-25.420 1.410 -22.400"  onclick="openLock4F()"></a-plane>
+    
+    <a-plane id="esciStanza4" visible="false" class="clickable" scale="1.310 1.610 1" position="-20.330 1.200 -23.550" rotation="0 180 0" onclick="openLock4D()"></a-plane>
+
+
+    <!--STANZA FUORI-->
+    <a-plane id="pareteScorrevole" sound="src: #scorre; volume: 0.0001" color="#333333" position="-17.106 4.910 -9.380" scale="31.990 9.170 1.000" rotation="0 90 0"></a-plane>
+    <a-plane id="pareteSinistraFuori" color="#333333" position="-25.996 4.708 -4.406" scale="20.670 8.880 1.000" rotation="0 180 0"></a-plane>
+
+    <a-plane id="pareteDietroFuori" color="#333333" position="6.376 4.540 -13.490" scale="35.960 9.170 1" rotation="0 -90 0" ></a-plane>
+    <a-plane id="pareteDietroFinale" color="#333333" position="7.376 -0.750 -13.490" scale="50 20 1" rotation="0 90 0" ></a-plane>
+
+    <a-plane id="pareteDestraFuori" color="#333333" position="-11.020 4.540 -22.476" scale="12.660 9.170 1.000"></a-plane>
+
+    <a-plane id="tettoFuori" color="#333333" position="-10.170 9.080 -13.980" scale="50 50 1.000" rotation="90 0 0" ></a-plane>
+
+    <a-plane id="portaF" src="#portaPrigione" position="-35.400 4.890 -15.290" rotation="0 90 0" scale="5.000 9.010 1" sound="src: #openDoor; volume: 0.0001" > </a-plane>
+
+    
+
+    <a-plane id="avantiDestraFuori" color="#333333" position="-35.580 4.430 -26.550" scale="17.660 10 1" rotation="0 90 0" ></a-plane>
+    <a-plane id="avantiSinistraFuori" color="#333333" position="-35.580 4.430 -8.610" scale="12.010 10 1" rotation="0 90 0"></a-plane>
+
+
+    <a-plane id="testoFinale" material="visible: false" scale="30 30 20" position=" 35 3.5 -15.696" rotation="0 -90 0" text="color:#b84135; xOffset:0.040; font: mozillavr; value: Congratulations, you passed the level!\n\nNew levels will be added soon, don't miss them!"></a-plane>
+
+
+<!--SBARRE-->
+    <!--1 STANZA PARETI-->
+    <a-cylinder id="prison11" color="#333333" position="-3.460 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison12" color="#333333" position="-1.760 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison13" color="#333333" position="0.010 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison14" color="#333333" position="1.820 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison15" color="#333333" position="3.530 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison16" color="#333333" position="5.250 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+
+    <a-obj-model id="lockOut1Dentro" src="#lockOutObj" mtl="#lockOutMtl" scale="0.014 -0.010 -0.010" position="-2.470 5.663 -4.792" rotation="-106.480 0 0" sound="src: #openLock; volume: 0.0001" onclick="openLock1D()"></a-obj-model>
+
+    <a-obj-model id="lockOut1Fuori" src="#lockOutObj" mtl="#lockOutMtl" scale="0.014 -0.010 -0.010"
+        position="2.730 5.663 -3.352" rotation="-112.070 180 0" sound="src: #openLock; volume: 0.0001">
+    
+    </a-obj-model>
+
+
+        <!--2 STANZA PARETI-->
+    <a-cylinder id="prison21" color="#333333" position="-14.750 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison22" color="#333333" position="-13.050 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison23" color="#333333" position="-11.140 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison24" color="#333333" position="-9.460 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison25" color="#333333" position="-7.590 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+    <a-cylinder id="prison26" color="#333333" position="-5.970 4.570 -4.340" scale="0.450 9.070 0.280"></a-cylinder>
+
+    <a-obj-model id="lockOut2Dentro" src="#lockOutObj" mtl="#lockOutMtl" scale="0.014 -0.010 -0.010" position="-13.600 5.663 -4.792" rotation="-106.480 0 0" onclick="openLock2D()"></a-obj-model>
+
+    <a-obj-model id="lockOut2Fuori" src="#lockOutObj" mtl="#lockOutMtl" scale="0.014 -0.010 -0.010"
+        position="-6.840 5.663 -3.542" rotation="-112.030 180 0"></a-obj-model>
+
+        <!--3 STANZA PARETI -->
+        <a-cylinder id="prison31" color="#333333" position="-3.460 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+        <a-cylinder id="prison32" color="#333333" position="-1.760 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+        <a-cylinder id="prison33" color="#333333" position="0.010 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+        <a-cylinder id="prison34" color="#333333" position="1.820 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+        <a-cylinder id="prison35" color="#333333" position="3.530 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+        <a-cylinder id="prison36" color="#333333" position="5.250 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+
+
+        <a-obj-model id="lockOut3Fuori" src="#lockOutObj" mtl="#lockOutMtl" scale="0.014 -0.010 -0.010" position="2.730 5.663 -23.582"
+            rotation="-112.070 0 0"></a-obj-model>
+
+            <a-obj-model id="lockOut3Dentro" src="#lockOutObj" mtl="#lockOutMtl" scale="0.014 -0.010 -0.010"
+                position="-2.440 5.663 -21.972" rotation="-112.070 180 0" ></a-obj-model>
+    
+
+         <!--4 STANZA PARETI -->
+         <a-cylinder id="prison31" color="#333333" position="-18.540 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+         <a-cylinder id="prison32" color="#333333" position="-20.340 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+         <a-cylinder id="prison33" color="#333333" position="-21.980 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+         <a-cylinder id="prison34" color="#333333" position="-23.740 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+         <a-cylinder id="prison35" color="#333333" position="-25.500 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+         <a-cylinder id="prison36" color="#333333" position="-27.360 4.570 -22.860" scale="0.450 9.070 0.280"></a-cylinder>
+     
+        <a-obj-model id="lockOut4Fuori" src="#lockOutObj" mtl="#lockOutMtl" scale="0.014 -0.010 -0.010"
+            position="-26.250 5.663 -24.012" rotation="-112.070 0 0"></a-obj-model>
+
+            <a-obj-model id="lockOut4Dentro" src="#lockOutObj" mtl="#lockOutMtl" scale="0.014 -0.010 -0.010"
+                position="-19.450 5.663 -22.092" rotation="-112.070 180 0" ></a-obj-model>
+
+
+    <!--ENIGMA MURO-->
+    <a-plane id="muro_plane0"  material="visible: false"  position="-4.670 8.330 -3.420" rotation="0 90 0"  text="value: 0; align:center; color:#b0362b; width: 20; height: 20" class="clickable" scale="0.8 0.8 0.8" ></a-plane>
+    <a-plane id="muro_plane1"  material="visible: false"  position="-4.670 7.070 -3.420" rotation="0 90 0" text="value: 0; align:center; color:#b0362b; width: 20; height: 20" class="clickable" scale="0.8 0.8 0.8"></a-plane>
+    <a-plane id="muro_plane2"  material="visible: false"  position="-4.670 5.450 -3.420" rotation="0 90 0" text="value: 0; align:center; color:#b0362b; width: 20; height: 20" class="clickable" scale="0.8 0.8 0.8"></a-plane>
+    <a-plane id="muro_planeOk" material="visible: false" position="-4.670 2.830 1.180" rotation="0 90 0" text="value: OK; align:center; color:#b0362b; width: 12; height: 12" class="clickable" scale="0.8 0.8 0.8"></a-plane>
+
+
+
+
+
+
+
+
+
+
+    <!--LAST ROOM-->
+    <a-obj-model id="prigioniero4" visible="false" src="#prigioniero4Obj" mtl="#prigioniero4Mtl" scale="0.050 0.050 0.050" position="-10.980 -0.360 -15.696" rotation="-90.000 90.000 0" ></a-obj-model>
+    <a-obj-model id="prigioniero3" visible="false" src="#prigioniero3Obj" mtl="#prigioniero3Mtl" scale="0.050 0.050 0.050" position="-9.710 -0.360 -15.556" rotation="-90 -106.400 0" ></a-obj-model>
+
+    <a-box id="pedana0" onclick="rialzaPedane0()" color="red" scale="1.000 0.400 1" position="-15.540 0.550 -15.386"></a-box>
+    <a-box id="pedana1" onclick="rialzaPedane1()" color="red" scale="1.000 0.400 1" position="-14.210 0.550 -17.266"></a-box>
+    <a-box id="pedana2" onclick="rialzaPedane2()" color="red" scale="1.000 0.400 1" position="-12.510 0.550 -18.866"></a-box>
+    <a-box id="pedana3" onclick="rialzaPedane3()" color="red" scale="1.000 0.400 1" position="-10.460 0.550 -20.196"></a-box>
+    <a-box id="pedana4" onclick="rialzaPedane4()" color="red" scale="1.000 0.400 1" position="-8.450 0.550 -18.866"></a-box>
+    <a-box id="pedana5" onclick="rialzaPedane5()" color="red" scale="1.000 0.400 1" position="-6.650 0.550 -17.266"></a-box>
+    <a-box id="pedana6" onclick="rialzaPedane6()" color="red" scale="1.000 0.400 1" position="-4.820 0.550 -15.386"></a-box>
+    <a-box id="pedana7" onclick="rialzaPedane7()" color="red" scale="1.000 0.400 1" position="-6.650 0.550 -13.386"></a-box>
+    <a-box id="pedana8" onclick="rialzaPedane8()" color="red" scale="1.000 0.400 1" position="-8.450 0.550 -11.766"></a-box>
+    <a-box id="pedana9" onclick="rialzaPedane9()" color="red" scale="1.000 0.400 1" position="-10.480 0.550 -10.386"></a-box>
+    <a-box id="pedana10" onclick="rialzaPedane10()" color="red" scale="1.000 0.400 1" position="-12.510 0.550 -11.766"></a-box>
+    <a-box id="pedana11" onclick="rialzaPedane11()" color="red" scale="1.000 0.400 1" position="-14.210 0.550 -13.386"></a-box>
+
+
+
+    
+    
+    <!--ESCI-->
+    <a-gui-button id="esciDentro"
+    position= "0 0.330 1.930"
+    width="2.5" height="0.75"
+    onclick="window.location.replace('../');"
+    rotation="-90 0 0"
+		value="EXIT"
+		font-family="Arial"
+		margin="0 0 0.05 0">
+	</a-gui-button>
+
+    
+    <!--ESCI-->
+    <a-gui-button id="esciFuori"
+    position= "30 0.330 -15.696"
+    width="2.5" height="0.75"
+    onclick="window.location.replace('../');"
+    rotation="-90 0 0"
+		value="EXIT"
+		font-family="Arial"
+		margin="0 0 0.05 0"
+    >
+	</a-gui-button>
+
+
+</a-scene>
+
+
+        <script>
+
+            var posy = 3;
+            var vaiGiu = posy -1.3;
+  
+     var beep1 = document.querySelector('.beep1');
+     var beep2 = document.querySelector('.beep2');
+     var beep3 = document.querySelector('.beep3');
+     var beep4 = document.querySelector('.beep4');
+
+  var sceneEl = document.querySelector('a-scene');
+  var io= document.querySelector('#cameraRig');
+  var cursore = document.querySelector('a-gui-cursor');
+
+
+  
+var portaFinale=document.querySelector('#portaF');
+var cielo= document.querySelector('#cielo');
+var pavimento=document.querySelector('#piano1');
+
+var vittoria=0;
+
+
+portaFinale.addEventListener('click', function(evt){
+    io.setAttribute('position', {x: 30, y: posy, z: -15.696});
+    
+  pavimento.setAttribute('material', 'color', '#121212');
+
+
+
+    vittoria = 1;
+} );
+
+
+
+//LAST ENIGMA INIZIALIZZAZIONE
+var hoSbagliato=0;
+var cliccaBottoni=0;
+
+
+
+
+
+    var lockOut1Dentro = document.querySelector('#lockOut1Dentro');
+    var lockOut2Dentro = document.querySelector('#lockOut2Dentro');
+    var lockOut3Dentro = document.querySelector('#lockOut3Dentro');
+    var lockOut4Dentro = document.querySelector('#lockOut4Dentro');
+    
+
+
+
+    var letto=document.querySelector('#letto3');
+    
+        var button1 = document.querySelector('#button1');
+        var button2 = document.querySelector('#button2');
+        var button3 = document.querySelector('#button3');
+
+    
+
+      
+        var teletrasportoStanza1 = document.querySelector('#teletrasportoStanza1');
+        var teletrasportoStanza2 = document.querySelector('#teletrasportoStanza2');
+        var teletrasportoStanza3 = document.querySelector('#teletrasportoStanza3');
+        var teletrasportoStanza4 = document.querySelector('#teletrasportoStanza4');
+
+
+
+        //PEDANE
+        var pedana = new Array();
+        var tempPedanaKo;
+        var tempPedanaOk;
+        var abbassato = new Array();
+        
+
+
+        abbassato[-1] = -1;
+        abbassato[1] = -1;
+
+        var pareteScorrevole = document.querySelector('#pareteScorrevole');
+
+        var teletrasportoStanza4 = document.querySelector('#teletrasportoStanza4');
+        var button4 = document.querySelector('#button4');
+
+
+
+        //INIZIALIZZO PEDANE
+        for (var x = 0; x < 12; x++) {
+            var tempPedanaKo = document.querySelector('#pedana' + x);
+            pedana[x] = tempPedanaKo;
+        }
+        rialazaPedana1 = pedana[0];
+        rialazaPedana2 = pedana[0];
+
+
+        //AZIONE SU PEDANA
+        for (var c = 0; c < 12; c++) {
+            tempPedanaOk = pedana[c];
+    tempPedanaOk.addEventListener('click', function () {
+
+                //CURSORE
+                cursore.setAttribute('raycaster', 'enabled: false');
+                setTimeout(function () {
+                    cursore.setAttribute('raycaster', 'enabled: true');
+                }, 6500);
+
+                //ABBASSA PEDANA
+                var positionPedana = this.getAttribute('position');
+
+                
+               
+                                io.setAttribute('animation', 'property: position; dur:5000; easing: linear; to: ' + positionPedana.x + ' ' + posy + ' ' + positionPedana.z);
+               
+
+                   io.setAttribute('animation__giu', 'property: position; delay: 6000; from: ' + positionPedana.x + ' ' + posy + ' ' + positionPedana.z + '; to: ' + (positionPedana.x) + ' ' + vaiGiu + ' ' + (positionPedana.z));
+               
+
+                this.setAttribute('animation__giuPed', 'property: position; easing: linear; delay:6000; to: ' + (positionPedana.x) + ' 0.2 ' + (positionPedana.z));
+                this.setAttribute('class', 'not-clickable');
+
+                
+
+                if (giocatoreScelto == 1) {
+                    giocatore[giocatoreScelto].setAttribute('position', { x: (positionPedana.x + 0.8), y: -0.3, z: (positionPedana.z - 0.2) });
+                }
+                else {
+                    giocatore[giocatoreScelto].setAttribute('position', { x: (positionPedana.x - 0.6), y: -0.3, z: (positionPedana.z) });
+                }
+
+                
+
+            });
+
+        }
+
+        //RIALZARE PEDANA
+        function rialzaPedane0() {
+            var rialazaPedana;
+            var positionPedanaTemp;
+            for (var f = 0; f < 12; f++) {
+                if (abbassato[giocatoreScelto] == f ) {
+                    rialazaPedana = document.querySelector('#pedana' + f);
+                    positionPedanaTemp = rialazaPedana.getAttribute('position');
+                    rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+                    rialazaPedana.setAttribute('class', 'clickable');
+
+                }
+            }
+            abbassato[giocatoreScelto] = 0;
+        }
+
+
+
+    //FUNZIONE SPARISCILOCK
+    function sparisciLock(){
+        
+        for (var l = 0; l < 12; l++) {
+            pedana[l].setAttribute('class', 'not-clickable');
+        }
+
+
+        teletrasportoStanza1.setAttribute('class', 'not-clickable');
+        teletrasportoStanza2.setAttribute('class', 'not-clickable');
+        teletrasportoStanza3.setAttribute('class', 'not-clickable');
+            teletrasportoStanza4.setAttribute('class', 'not-clickable');
+
+
+        button1.setAttribute('class', 'not-clickable');
+        button2.setAttribute('class', 'not-clickable');
+        button3.setAttribute('class', 'not-clickable');
+
+        
+        
+    }
+
+    //FUNZIONE attivaLOCK
+    function attivaLock() {
+        //RENDI TUTTO CLICKABLE
+
+        for (var l = 0; l < 12; l++) {
+            pedana[l].setAttribute('class', 'clickable');
+        }
+
+
+        teletrasportoStanza1.setAttribute('class', 'clickable');
+        teletrasportoStanza2.setAttribute('class', 'clickable');
+        teletrasportoStanza3.setAttribute('class', 'clickable');
+        //STANZA 4 SI RENDE CLIOCCABILE SOLO SUPERANDO L'ENIGMA OROLOGIO
+        if (vintoPedane == 1) {
+            teletrasportoStanza4.setAttribute('class', 'clickable');
+
+        }
+
+        button1.setAttribute('class', 'clickable');
+        button2.setAttribute('class', 'clickable');
+        button3.setAttribute('class', 'clickable');
+                    //BUTTON 4 SI RENDE CLIOCCABILE SOLO SUPERANDO L'ENIGMA OROLOGIO
+
+        esciStanza3.setAttribute('class', 'not-clickable');
+        esciStanza4.setAttribute('class', 'not-clickable');
+        lockOut1Dentro.setAttribute('class', 'not-clickable');
+        lockOut2Dentro.setAttribute('class', 'not-clickable');
+    }
+
+    
+
+// SUONI INIZIALIZZAZIONE
+
+var morseEl = document.querySelector('.codice');
+
+   
+
+
+    var wallFallEl=document.querySelector('.wallf');
+
+    var sparisceBucoEl= document.querySelector('.sparisceb');
+
+    var correctEl = document.querySelector('.corr');
+
+        var sbagliatoEl=document.querySelector('.wrong');
+var rain=document.querySelector('.pioggia');
+
+
+
+
+
+ 
+
+function primoBeep()
+{
+     
+          
+
+
+           beep3.setAttribute('sound', 'volume: 5');
+        beep3.components.sound.playSound();
+        
+
+     
+
+     setTimeout(function(){
+         
+         beep2.setAttribute('sound', 'volume: 5');
+        beep2.components.sound.playSound();
+
+
+              }, 2000);
+
+     
+     setTimeout(function(){
+                    beep4.setAttribute('sound', 'volume: 5');
+
+        beep4.components.sound.playSound();
+        
+     }, 4000);
+
+     
+     setTimeout(function(){
+
+         
+
+         beep1.setAttribute('sound', 'volume: 5');
+
+
+
+
+        beep1.components.sound.playSound();
+
+
+     }, 6000);
+
+
+
+ }
+
+
+
+function morse(){
+            morseEl.setAttribute('sound', 'volume: 20');
+
+    morseEl.components.sound.playSound();
+}
+
+function openDoor()
+{
+
+    portaFinale.setAttribute('sound', 'volume: 20');
+
+    portaFinale.components.sound.playSound();
+}
+
+function openLock1D()
+{
+
+    lockOut1Dentro.setAttribute('sound', 'volume: 100');
+    lockOut1Dentro.components.sound.playSound();
+}
+
+    function openLock1F() {
+        
+        lockOut1Fuori.setAttribute('sound', 'volume: 100');
+
+        lockOut1Fuori.components.sound.playSound();
+    }
+
+    function openLock2D() {
+        
+        lockOut2Dentro.setAttribute('sound', 'volume: 100');
+            lockOut2Dentro.components.sound.playSound();
+        }
+
+        function openLock2F() {
+            
+            lockOut2Fuori.setAttribute('sound', 'volume: 100');
+
+            lockOut2Fuori.components.sound.playSound();
+        }
+
+        function openLock3D() {
+            
+            lockOut3Dentro.setAttribute('sound', 'volume: 100');
+                lockOut3Dentro.components.sound.playSound();
+            }
+
+            function openLock3F() {
+                
+                lockOut3Fuori.setAttribute('sound', 'volume: 100');
+
+                lockOut3Fuori.components.sound.playSound();
+            }
+
+            function openLock4D() {
+                
+                lockOut4Dentro.setAttribute('sound', 'volume: 100');
+                    lockOut4Dentro.components.sound.playSound();
+                }
+
+                function openLock4F() {
+                                    lockOut4Fuori.setAttribute('sound', 'volume: 100');
+
+                    lockOut4Fuori.components.sound.playSound();
+                }
+
+function wallFall(){
+    wallFallEl.setAttribute('sound', 'volume: 20');
+
+
+
+    wallFallEl.components.sound.playSound();
+}
+
+  function sparisceBuco(){
+              sparisceBucoEl.setAttribute('sound', 'volume: 20');
+
+    sparisceBucoEl.components.sound.playSound();
+}
+
+
+
+
+
+
+
+//CD CHIAVE
+var cdKey=document.querySelector('#cdkey');
+
+var cdKeyFinto = document.querySelector('#cdKeyFinto');
+var hoLaChiaveBuco=0;
+var hoLaChiaveCd=0;
+cdKeyFinto.addEventListener('click', function(evt){
+    cdKey.setAttribute('animation', 'property: position; to: -0.080 2.650 0.340; dur:5000; easing:linear');
+    hoLaChiaveCd=1;
+    cdKeyFinto.setAttribute('class', 'not-clickable');
+
+    lockOut1Dentro.setAttribute('class', 'clickable');
+    lockOut2Dentro.setAttribute('class', 'clickable');
+
+});
+
+
+//BUCO CHIAVE IN ALTO
+var bucoKey=document.querySelector('#bucokey');
+
+var bucoKeyFinto=document.querySelector('#bucoKeyFinto');
+var nascondiBucoKey=document.querySelector('#nascondibucokey');
+
+nascondiBucoKey.addEventListener('click', function(evt){
+    this.setAttribute('animation', 'property: position; to: -0.010 -4 0.300; dur:5000; easing:linear');
+    this.setAttribute('class', 'not-clickable');
+});
+
+bucoKeyFinto.addEventListener('click', function(evt){
+    bucoKey.setAttribute('animation', 'property: position; to: -0.080 2.650 0.340; dur:5000; easing:linear');
+    hoLaChiaveBuco=1;
+    bucoKeyFinto.setAttribute('class', 'not-clickable');
+});
+
+
+
+//TELETRASPOTO MURO GIOCATORE1
+var cliccaBuco1 = document.querySelector('#cliccabuco1');
+var prigioniero2 = document.querySelector('#prigioniero2');
+var prigioniero1=document.querySelector('#prigioniero1');
+
+
+
+var mano1 =document.querySelector('#mano1') ;
+var mano2 =document.querySelector('#mano2') ;
+delayInMilliseconds= 5000;
+var mano1= document.querySelector('#mano1');
+var morseLock = document.querySelector('#radLock');
+
+
+
+cliccaBuco1.addEventListener('click', function(evt){
+    io.setAttribute('animation', 'property: position; to: -4.6 ' + posy + ' 6 ; dur:5000; easing:linear');
+    mano2.setAttribute('visible', 'false');
+    mano1.setAttribute('rotation', { x: 180, y: 0, z: 0});
+    mano1.emit("sposta1");
+
+    prigioniero2.setAttribute('visible', 'true');
+
+
+    setTimeout(function(){
+        
+        prigioniero2.setAttribute('class', 'clickable');
+    }, 6000);
+   
+
+    if(hoLaChiaveBuco==1)
+    {
+        
+        bucoKey.setAttribute('rotation', { x: 0, y: 90, z: 0});
+        bucoKey.setAttribute('position', { x: -4.600, y: 2.830, z: 5.990});
+        bucoKey.setAttribute('visible', 'false');
+
+        setTimeout(function(){
+         bucoKey.setAttribute('visible', 'true');
+        }, delayInMilliseconds);
+    }
+    if(hoLaChiaveCd==1)
+    {
+        cdKey.setAttribute('rotation', { x: 0, y: 90, z: 0});
+        cdKey.setAttribute('position', { x: -4.600, y: 2.830, z: 5.990});
+        cdKey.setAttribute('visible', 'false');
+
+        setTimeout(function(){
+         cdKey.setAttribute('visible', 'true');
+        }, 5000);
+    }
+});
+
+prigioniero2.addEventListener('click', function(evt){
+    prigioniero2.setAttribute('visible', 'false');
+    prigioniero2.setAttribute('class', 'not-clickable');
+    io.setAttribute('position', { x: -10.080, y: posy, z: 1.930});
+    io.setAttribute('rotation', { x: 0, y: 0, z: 0});
+    mano2.setAttribute('visible', 'true');
+    mano2.setAttribute('position', { x: -10.000, y: 2.705, z: 2.380});
+    mano2.setAttribute('rotation',{ x: 180, y: -90, z: 0});
+    morseLock.setAttribute('class', 'clickable');
+
+
+    if(hoLaChiaveBuco==1)
+    {
+        bucoKey.setAttribute('rotation', { x: 0, y: 0, z: 0});
+        bucoKey.setAttribute('position', { x: -9.900, y: 2.630, z: 2.230});
+          
+    }
+    if(hoLaChiaveCd==1)
+{
+    cdKey.setAttribute('rotation', { x: 0, y: 0, z: 0});
+        cdKey.setAttribute('position', { x: -9.900, y: 2.630, z: 2.230});
+       
+}
+
+});
+
+
+
+//TELETRASPOTO MURO GIOCATORE2
+var cliccaBuco2=document.querySelector('#cliccabuco2');
+
+cliccaBuco2.addEventListener('click', function(evt){
+    mano2.emit("sposta2");
+    io.setAttribute('animation', 'property: position; to: -4.800 ' + posy + ' 6; dur:5000; easing:linear');
+    mano1.setAttribute('visible', 'false');
+    mano2.setAttribute('rotation', { x: 180, y: 180, z: 0});
+    prigioniero2.setAttribute('class', 'not-clickable');
+
+    prigioniero1.setAttribute('visible', 'true');
+
+    setTimeout(function(){
+        
+        prigioniero1.setAttribute('class', 'clickable');
+    }, 6000);
+
+    if(hoLaChiaveBuco==1)
+    {
+        
+        bucoKey.setAttribute('rotation', { x: 0, y: 90, z: 0});
+        bucoKey.setAttribute('position', { x: -4.130, y: 2.815, z: 6.050});
+        bucoKey.setAttribute('visible', 'false');
+
+        setTimeout(function(){
+         bucoKey.setAttribute('visible', 'true');
+        }, 5000);
+    }
+    if(hoLaChiaveCd==1)
+    {
+        
+        cdKey.setAttribute('rotation', { x: 0, y: 90, z: 0});
+        cdKey.setAttribute('position', { x: -4.130, y: 2.815, z: 6.050});
+        cdKey.setAttribute('visible', 'false');
+
+        setTimeout(function(){
+         cdKey.setAttribute('visible', 'true');
+        }, 5000);
+    }
+});
+
+prigioniero1.addEventListener('click', function(evt){
+    prigioniero2.setAttribute('class', 'clickable');
+    prigioniero1.setAttribute('visible', 'false');
+    prigioniero1.setAttribute('class', 'not-clickable');
+    io.setAttribute('position', { x: 0, y: posy, z: 0});
+    io.setAttribute('rotation', { x: 0, y: 0, z: 0});
+    mano1.setAttribute('visible', 'true');
+    mano1.setAttribute('position', { x: 0.030, y: 2.705, z: -0.310});
+    mano1.setAttribute('rotation',{ x: 180, y: 90, z: 0});
+    morseLock.setAttribute('class','not-clickable');
+      
+    if(hoLaChiaveBuco==1)
+    {
+        bucoKey.setAttribute('rotation', { x: 0, y: 0, z: 0});
+        bucoKey.setAttribute('position', { x: -0.080, y: 2.650, z: 0.340});
+    }
+    if(hoLaChiaveCd==1)
+    {
+        cdKey.setAttribute('rotation', { x: 0, y: 0, z: 0});
+        cdKey.setAttribute('position', { x: -0.080, y: 2.650, z: 0.340});
+    
+    }
+
+});
+
+
+//1° ENIGMA: MURO 
+    var nascondiBuco= document.querySelector('#nascondiBuco1');
+  var muro= new Array();
+  muro[0]=0;
+  muro[1]=0;
+  muro[2]=0;
+
+
+  var muro_plane0= document.querySelector('#muro_plane0');
+  var muro_plane1= document.querySelector('#muro_plane1');
+  var muro_plane2= document.querySelector('#muro_plane2');
+  var muro_planeOk= document.querySelector('#muro_planeOk');
+
+  
+
+
+//scorrimento cifre
+
+//PRIMO PLANE
+muro_plane0.addEventListener('click', function(evt){
+  //incrementa il numero, se ? 9 torna a 0
+  if(muro[0]==9)
+  {
+    muro[0]=0;
+  }
+  else{
+    muro[0]++;
+  }
+
+  muro_plane0.setAttribute('text', 'value: ' + muro[0]);
+});
+
+//SECONDO PLANE
+muro_plane1.addEventListener('click', function(evt){
+  //incrementa il numero, se ? 9 torna a 0
+  if(muro[1]==9)
+  {
+    muro[1]=0;
+  }
+  else{
+    muro[1]++;
+  }
+
+  muro_plane1.setAttribute('text', 'value: ' + muro[1]);
+
+});
+//TERZO PLANE
+muro_plane2.addEventListener('click', function(evt){
+  //incrementa il numero, se ? 9 torna a 0
+  if(muro[2]==9)
+  {
+    muro[2]=0;
+  }
+  else{
+    muro[2]++;
+  }
+  muro_plane2.setAttribute('text', 'value: ' + muro[2]);
+
+});
+//VITTORIA
+muro_planeOk.addEventListener('click', function(evt){
+  if(muro[0]==5 && muro[1]== 4 && muro[2]==6)
+  {
+    //nascondiBuco.setAttribute('animation', 'property: position; to: -4.494 1 5.914; dur:5000; easing:linear')
+    nascondiBuco.setAttribute('animation', 'property: visible; to: false; dur:5000; delay: 500; easing:linear');
+    cliccaBuco1.setAttribute('class', 'clickable');
+    sparisceBuco();
+    muro_planeOk.setAttribute('class', 'not-clickable');
+  }
+});
+
+
+
+
+
+//2° ENIGMA CODICE MORSE
+var piano=new Array();
+var pianoImg = new Array();
+var cdPorta= document.querySelector('#cdporta');
+var radioEl = document.querySelector('#radio');
+var radPorta = document.querySelector('#radPorta');
+
+
+
+
+
+morseLock.addEventListener('click', function(evt){
+    if(hoLaChiaveBuco==1){
+        this.setAttribute('visible', 'false');
+    this.setAttribute('class', 'not-clickable');
+    radPorta.setAttribute('animation', 'property: position; to: -14.813 2.531 3.518 dur:5000; easing: linear')
+    bucoKey.setAttribute('visible', 'false');
+    radioEl.setAttribute('class', 'clickable');
+
+
+
+    }
+
+    });
+
+
+
+
+for(var k=0;k<6;k++)
+{
+    piano[k]=0;
+    pianoImg[k]= document.querySelector('#cd' + (k+1));
+    pianoImg[k].setAttribute('src', 'immagini/punto.jpg'); 
+}
+
+
+//PLANE CDi
+
+    //CD0
+    pianoImg[0].addEventListener('click', function(evt){
+    if(piano[0]==0)
+    {
+        pianoImg[0].setAttribute('src', 'immagini/linea.jpg');
+        piano[0]=1;
+    }
+    else
+    {
+        pianoImg[0].setAttribute('src', 'immagini/punto.jpg');
+        piano[0]=0;
+
+    }
+    });
+
+     //CD1
+     pianoImg[1].addEventListener('click', function(evt){
+    if(piano[1]==0)
+    {
+        pianoImg[1].setAttribute('src', 'immagini/linea.jpg');
+        piano[1]=1;
+    }
+    else
+    {
+        pianoImg[1].setAttribute('src', 'immagini/punto.jpg');
+        piano[1]=0;
+    }
+    });
+
+     //CD2
+     pianoImg[2].addEventListener('click', function(evt){
+    if(piano[2]==0)
+    {
+        pianoImg[2].setAttribute('src', 'immagini/linea.jpg');
+        piano[2]=1;
+    }
+    else
+    {
+        pianoImg[2].setAttribute('src', 'immagini/punto.jpg');
+        piano[2]=0;
+    }
+    });
+
+    
+     //CD3
+     pianoImg[3].addEventListener('click', function(evt){
+    if(piano[3]==0)
+    {
+        pianoImg[3].setAttribute('src', 'immagini/linea.jpg');
+        piano[3]=1;
+    }
+    else
+    {
+        pianoImg[3].setAttribute('src', 'immagini/punto.jpg');
+        piano[3]=0;
+    }
+    });
+
+
+     //CD4
+     pianoImg[4].addEventListener('click', function(evt){
+    if(piano[4]==0)
+    {
+        pianoImg[4].setAttribute('src', 'immagini/linea.jpg');
+        piano[4]=1;
+    }
+    else
+    {
+        pianoImg[4].setAttribute('src', 'immagini/punto.jpg');
+        piano[4]=0;
+    }
+    });
+     
+
+     //CD5
+     pianoImg[5].addEventListener('click', function(evt){
+    if(piano[5]==0)
+    {
+        pianoImg[5].setAttribute('src', 'immagini/linea.jpg');
+        piano[5]=1;
+    }
+    else
+    {
+        pianoImg[5].setAttribute('src', 'immagini/punto.jpg');
+        piano[5]=0;
+    }
+    });
+
+
+//VITTORIA CD
+cdPorta.addEventListener('click', function(evt){
+    //if(piano[0]==0 && piano[1]== 0 && piano[2]==1 && piano[3]==0; &&piano[4]==1 && piano[5]== 1)
+
+    if(piano[0]==0 && piano[1]== 1 && piano[2]==1 && piano[3]==0 &&piano[4]==1 && piano[5]== 0)
+    {
+        cdPorta.setAttribute('animation', 'property: position; to: 4.663 -4 -0.342; dur:5000; easing:linear');
+        cdPorta.setAttribute('class', 'not-clickable');
+        cdPorta.setAttribute('class', 'not-clickable');
+    }
+
+
+});
+
+
+
+
+
+
+
+
+
+
+
+//LAST ROOM
+var GIOCATORE3= document.querySelector('#prigioniero3');
+var GIOCATORE4= document.querySelector('#prigioniero4');
+var giocatoreScelto = 1;
+var giocatore = new Array();
+
+giocatore[-1]= GIOCATORE3;
+giocatore[1]= GIOCATORE4;
+
+
+
+
+
+
+
+//CAMBIO IN GIOCATORE 1
+var position3;
+GIOCATORE3.addEventListener('click', function(evt){
+
+    position3=GIOCATORE3.getAttribute('position');
+    io.setAttribute('position', {x: position3.x, y: posy, z: position3.z});
+    GIOCATORE3.setAttribute('visible', 'false');
+    GIOCATORE3.setAttribute('class', 'not-clickable');
+    GIOCATORE4.setAttribute('visible', 'true');
+    GIOCATORE4.setAttribute('class', 'clickable');
+    giocatoreScelto=-1;
+});
+
+//CAMBIO IN GIOCATORE 2
+
+    var position4;
+GIOCATORE4.addEventListener('click', function(evt){
+    position4=GIOCATORE4.getAttribute('position');
+    io.setAttribute('position', {x: position4.x, y: posy, z: position4.z});
+    GIOCATORE4.setAttribute('visible', 'false');
+    GIOCATORE4.setAttribute('class', 'not-clickable');
+    GIOCATORE3.setAttribute('visible', 'true');
+    GIOCATORE3.setAttribute('class', 'clickable');
+    giocatoreScelto=1;
+
+
+});
+
+
+//OROLOGIO
+var orologio = document.querySelector('#orologio');
+var batteria = document.querySelector('#batteria');
+var hoLaBatteria=0;
+var correctEl = document.querySelector('.corr');
+var sbagliatoEl=document.querySelector('.wrong');
+
+var vintoPedane=0;
+
+function batteriaVisibile(){
+    batteria.setAttribute('visible', 'true');
+}
+
+
+batteria.addEventListener('click', function(evt){
+    hoLaBatteria=1;
+});
+
+function cambiaOrologio(){
+    
+    if(hoLaBatteria==1)
+    {
+
+                correctEl.setAttribute('sound', 'volume: 20');
+
+        correctEl.components.sound.playSound();
+        orologio.setAttribute('text', 'color:#e01800; font: mozillavr; value: 15:40; width: 8.960; align: center; anchor: align; baseline: bottom')
+    }
+    else
+    {
+
+                sbagliatoEl.setAttribute('sound', 'volume: 20');
+
+        sbagliatoEl.components.sound.playSound();
+    }
+
+}
+
+
+function rialzaPedane1()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f )
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=1;   
+}
+
+function rialzaPedane2()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f)
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=2;   
+}
+
+function rialzaPedane3()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+
+        for(var f=0;f<12;f++)
+        {
+            //VITTORIA_PEDANE 3
+           
+            var altro= -giocatoreScelto;
+            if(abbassato[altro]== 8 && vintoPedane==0)
+            {
+                vintoPedane = 1;
+                setTimeout(function()
+                {
+                        pareteScorrevole.setAttribute('sound', 'volume: 20');
+
+                    pareteScorrevole.setAttribute('animation', 'property: position; dur: 5000; easing: linear; to:-17.106 4.900 12.220; delay: 3000');
+                    pareteScorrevole.components.sound.playSound();
+                    teletrasportoStanza4.setAttribute('class', 'clickable');
+                    button4.setAttribute('class', 'clickable');
+
+
+                    
+                }, 7000);
+
+
+            }
+
+            if(abbassato[giocatoreScelto]==f )
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=3;   
+}
+
+function rialzaPedane4()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f )
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=4;   
+}
+
+
+function rialzaPedane5()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f )
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=5;   
+}
+
+
+function rialzaPedane6()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f )
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=6;   
+}
+
+
+function rialzaPedane7()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f )
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=7;   
+}
+
+
+function rialzaPedane8()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+        for(var f=0;f<12;f++)
+        {
+            //VITTORIA_PEDANE_8
+            var altro= -giocatoreScelto;
+
+
+            if(abbassato[altro]== 3 && vintoPedane==0 )
+            {
+                 vintoPedane = 1;
+                setTimeout(function () {
+                        pareteScorrevole.setAttribute('sound', 'volume: 20');
+
+                    pareteScorrevole.setAttribute('animation', 'property: position; dur: 5000; easing: linear; to:-17.106 4.900 12.220; delay: 3000');
+                    pareteScorrevole.components.sound.playSound();
+                    teletrasportoStanza4.setAttribute('class', 'clickable');
+                    button4.setAttribute('class', 'clickable');
+
+
+                }, 7000);
+
+            }
+
+
+            if(abbassato[giocatoreScelto]==f )
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=8;   
+}
+
+
+function rialzaPedane9()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f)
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=9;   
+}
+
+
+function rialzaPedane10()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f)
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+
+            } 
+       }
+       abbassato[giocatoreScelto]=10;   
+}
+
+
+function rialzaPedane11()
+{ 
+var rialazaPedana;
+var positionPedanaTemp;
+
+
+        for(var f=0;f<12;f++)
+        {
+            if(abbassato[giocatoreScelto]==f)
+           {
+            rialazaPedana=document.querySelector('#pedana' + f);
+            positionPedanaTemp =rialazaPedana.getAttribute('position');
+            rialazaPedana.setAttribute('animation__giuPed', 'property: position; dur:10; to: ' + positionPedanaTemp.x + ' 0.550 ' + positionPedanaTemp.z);
+            rialazaPedana.setAttribute('class', 'clickable');
+            } 
+       }
+       abbassato[giocatoreScelto]=11;   
+}
+
+
+
+
+
+
+//ENTRA CELLE
+
+teletrasportoStanza1.addEventListener('click', function(evt){
+    
+        lockOut1Dentro.setAttribute('class', 'clickable');
+         lockOut2Dentro.setAttribute('class', 'clickable');
+
+
+      
+
+    io.setAttribute('position', {x:0, y:posy, z: 0});
+    var altro= -giocatoreScelto;
+    giocatore[altro].setAttribute('visible', 'false');
+    giocatore[altro].setAttribute('class', 'not-clickable');
+    teletrasportoStanza1.setAttribute('class', 'not-clickable');
+    sonoDentro=1;
+
+    for(var l=0;l<12;l++)
+    {
+        pedana[l].setAttribute('class', 'not-clickable');
+    }
+
+
+    sparisciLock();
+
+    primoBeep();
+
+    cursore.setAttribute('raycaster', 'enabled: false');
+    setTimeout(function () {
+        cursore.setAttribute('raycaster', 'enabled: true');
+    }, 6000);
+
+
+});
+//
+
+teletrasportoStanza2.addEventListener('click', function(evt){
+
+
+    lockOut1Dentro.setAttribute('class', 'clickable');
+    lockOut2Dentro.setAttribute('class', 'clickable');    
+
+    var altro= -giocatoreScelto;
+
+    io.setAttribute('position', {x:-10.080, y: posy, z: 1.930});
+    giocatore[altro].setAttribute('visible', 'false');
+    giocatore[altro].setAttribute('class', 'not-clickable');
+    teletrasportoStanza2.setAttribute('class', 'not-clickable');
+
+    sonoDentro=1;
+
+    for (var l = 0; l < 12; l++) {
+        pedana[l].setAttribute('class', 'not-clickable');
+    }
+
+    sparisciLock();
+
+    primoBeep();
+
+    cursore.setAttribute('raycaster', 'enabled: false');
+    setTimeout(function () {
+        cursore.setAttribute('raycaster', 'enabled: true');
+    }, 6000);
+
+});
+
+teletrasportoStanza3.addEventListener('click', function(evt){
+    sonoDentro= 1;
+
+
+    letto.setAttribute('class', 'clickable');
+
+
+    var altro= -giocatoreScelto;
+
+    io.setAttribute('position', {x:0, y:posy, z: -28.286});
+    giocatore[altro].setAttribute('visible', 'false');
+    giocatore[altro].setAttribute('class', 'not-clickable');
+
+    
+
+    for (var l = 0; l < 12; l++) {
+        pedana[l].setAttribute('class', 'not-clickable');
+    }
+
+
+    sparisciLock();
+
+    esciStanza3.setAttribute('class', 'clickable');
+
+    primoBeep();
+
+    cursore.setAttribute('raycaster', 'enabled: false');
+    setTimeout(function () {
+        cursore.setAttribute('raycaster', 'enabled: true');
+    }, 6000);
+
+    
+});
+
+teletrasportoStanza4.addEventListener('click', function(evt){
+
+    
+
+    io.setAttribute('position', {x:-23.260, y:posy, z: -28.286});
+    var altro= -giocatoreScelto;
+
+    giocatore[altro].setAttribute('visible', 'false');
+    giocatore[altro].setAttribute('class', 'not-clickable');
+
+    sonoDentro=1;
+
+    for (var l = 0; l < 12; l++) {
+        pedana[l].setAttribute('class', 'not-clickable');
+    }
+
+
+    sparisciLock();
+    
+    esciStanza4.setAttribute('class', 'clickable');
+
+    primoBeep();
+
+    cursore.setAttribute('raycaster', 'enabled: false');
+    setTimeout(function () {
+        cursore.setAttribute('raycaster', 'enabled: true');
+    }, 6000);
+    
+});
+
+//LAST ENIGMA
+
+//var button4= document.querySelector('#button4'); GIA SOPRA
+
+var ordine=0;
+
+
+
+
+            
+esciStanza3.addEventListener('click', function(evt){
+    position3=GIOCATORE3.getAttribute('position');
+            io.setAttribute('position', {x: position3.x, y: posy, z: position3.z});
+            GIOCATORE4.setAttribute('visible', 'true');
+            GIOCATORE4.setAttribute('class', 'clickable');
+            giocatoreScelto=-1;
+            
+
+            attivaLock();
+
+    letto.setAttribute('class', 'not-clickable');
+
+
+            
+            for (var l = 0; l < 12; l++) {
+        pedana[l].setAttribute('class', 'clickable');
+    }
+
+
+            });
+
+esciStanza4.addEventListener('click', function(evt){
+    position4=GIOCATORE4.getAttribute('position');
+    io.setAttribute('position', {x: position4.x, y: posy, z: position4.z});
+        GIOCATORE3.setAttribute('visible', 'true');
+        GIOCATORE3.setAttribute('class', 'clickable');
+        giocatoreScelto=1;
+
+        attivaLock();
+
+
+                for (var l = 0; l < 12; l++) {
+        pedana[l].setAttribute('class', 'clickable');
+    }
+
+
+            });
+
+
+
+//SUONI FINTI BUTTON
+
+function premiBeep1(){
+    
+    button1.setAttribute('sound', 'volume: 20');
+    button1.components.sound.playSound();
+}
+
+function premiBeep2(){
+    
+    button2.setAttribute('sound', 'volume: 10');
+    button2.components.sound.playSound();
+}
+function premiBeep3(){
+    
+    button3.setAttribute('sound', 'volume: 20');
+    button3.components.sound.playSound();
+}
+function premiBeep4(){
+        button4.setAttribute('sound', 'volume: 20');
+    button4.components.sound.playSound();
+}
+
+
+
+//FUNZIONE PERDI_BUTTON
+
+function perdi_button(){
+    
+
+    button1.setAttribute('animation', 'property: position; dur: 2000; easing: linear; to: 0 8.270 -4.580 ');
+    button1.setAttribute('material', 'color', '#ffffff');
+    button1.setAttribute('class', 'clickable');
+
+
+
+    button2.setAttribute('animation', 'property: position; dur: 2000; easing: linear; to: -11.050 8.270 -4.540  ');
+    button2.setAttribute('material', 'color', '#ffffff');
+    button2.setAttribute('class', 'clickable');
+
+
+
+    button3.setAttribute('animation', 'property: position; dur: 2000; easing: linear; to: 0 8.270 -22.650  ');
+    button3.setAttribute('material', 'color', '#ffffff');
+    button3.setAttribute('class', 'clickable');
+
+
+    button4.setAttribute('animation', 'property: position; dur: 2000; easing: linear; to: -23.750 8.270 -22.690 ');
+    button4.setAttribute('material', 'color', '#ffffff');
+    button4.setAttribute('class', 'clickable');
+
+
+}
+   
+
+
+//ORDINE: 3-2-4-1
+
+button3.addEventListener('click', function(evt){
+    
+    cliccaBottoni++;
+
+    this.setAttribute('animation', 'property: position; dur: 2000; easing: linear; to: 0 8.270 -22.820 ');
+    this.setAttribute('material', 'color', '#4aa045');
+    this.setAttribute('class', 'not-clickable');
+
+
+            if(ordine==0)
+            {
+                ordine=1;
+            }
+            else
+            {
+                ordine=0;
+            }
+    if(cliccaBottoni==4)
+    {
+        cliccaBottoni=0;
+
+        ordine=0;
+
+
+        hoSbagliato=1;
+        lastTimer++;
+
+        perdi_button(); 
+
+
+
+    
+    }
+
+});
+
+button2.addEventListener('click', function(evt){
+    
+    cliccaBottoni++;
+
+    this.setAttribute('animation', 'property: position; dur: 2000; easing: linear; to: -11.1400 8.270 -4.410');
+    this.setAttribute('material', 'color', '#4aa045');
+    this.setAttribute('class', 'not-clickable');
+
+    if(ordine==1)
+    {
+        ordine=2;
+    }
+    else
+    {
+
+        ordine=0;
+
+        
+    if(cliccaBottoni==4)
+    {
+        cliccaBottoni=0;
+
+
+
+        hoSbagliato=1;
+        lastTimer++;
+
+
+       perdi_button();
+
+    }
+
+    }
+
+    
+
+});
+
+button4.addEventListener('click', function(evt){
+
+    cliccaBottoni++;
+
+
+    this.setAttribute('animation', 'property: position; dur: 2000; easing: linear; to: -23.750 8.270 -22.820');
+    this.setAttribute('material', 'color', '#4aa045');
+    this.setAttribute('class', 'not-clickable');
+    if(ordine==2)
+    {
+        ordine=3;
+    }
+    else
+    {
+
+        ordine=0;
+        
+    if(cliccaBottoni==4)
+    {
+        cliccaBottoni=0;
+
+
+
+        hoSbagliato=1;
+        lastTimer++;
+
+        
+       perdi_button();
+
+    }
+
+    }
+
+    
+
+});
+
+button1.addEventListener('click', function(evt){
+    cliccaBottoni++;
+
+    this.setAttribute('animation', 'property: position; dur: 2000; easing: linear; to: 0 8.270 -4.400');
+    this.setAttribute('material', 'color', '#4aa045');
+    this.setAttribute('class', 'not-clickable');
+
+
+    if(ordine==3)
+    {
+        ordine=4;
+
+        //VITTORIA
+        portaFinale.setAttribute('rotation', {x: 0, y: 120, z:0});
+        portaFinale.setAttribute('class', 'clickable');
+        openDoor();
+
+        
+
+        
+    }
+    else
+    {
+
+        ordine=0;
+    if(cliccaBottoni==4)
+    {
+        cliccaBottoni=0;
+         
+
+        hoSbagliato=1;
+        lastTimer++;
+
+        perdi_button();
+
+    }
+
+    }
+
+    
+
+    
+});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//FINE PRIMA PARTE
+var sbloccaLucchetti=0;
+
+lockOut1Dentro.addEventListener('click', function(){
+    if(hoLaChiaveCd==1)
+    {
+        sbloccaLucchetti++;
+    }
+
+    if(sbloccaLucchetti>=2)
+    {
+
+        lockOut1Dentro.setAttribute('class', 'not-clickable');
+    prigioniero1.setAttribute('visible', 'false');
+        prigioniero1.setAttribute('class', 'not-clickable');
+
+        //
+
+
+    prigioniero2.setAttribute('visible', 'false');
+        prigioniero2.setAttribute('class', 'not-clickable');
+        //TELETRASPORTO AL CENTRO DI LAST ROOM
+                position3=GIOCATORE3.getAttribute('position');
+            io.setAttribute('position', {x: position3.x, y: posy, z: position3.z});
+            GIOCATORE4.setAttribute('visible', 'true');
+            GIOCATORE4.setAttribute('class', 'clickable');
+            giocatoreScelto=-1;
+
+            attivaLock();
+
+          
+    }
+});
+
+
+lockOut2Dentro.addEventListener('click', function(){
+    if(hoLaChiaveCd==1)
+    {
+        sbloccaLucchetti++;
+
+    }
+
+    if(sbloccaLucchetti>=2)
+{         
+
+    lockOut2Dentro.setAttribute('class', 'not-clickable');
+    prigioniero1.setAttribute('visible', 'false');
+        prigioniero1.setAttribute('class', 'not-clickable');
+
+        
+    prigioniero2.setAttribute('visible', 'false');
+        prigioniero2.setAttribute('class', 'not-clickable');
+
+
+                //TELETRASPORTO AL CENTRO DI LAST ROOM
+                position4=GIOCATORE4.getAttribute('position');
+        io.setAttribute('position', {x: position4.x, y: posy, z: position4.z});
+        GIOCATORE3.setAttribute('visible', 'true');
+        GIOCATORE3.setAttribute('class', 'clickable');
+        giocatoreScelto=1;
+
+        attivaLock();
+}
+
+
+});
+
+
+var testoFinaleEl=document.querySelector('#testoFinale');
+
+sceneEl.addEventListener('enter-vr', function(evt){
+    posy= 1.55;
+    io.object3D.position.y = posy;
+    vaiGiu = posy -1.3;
+});
+
+    sceneEl.addEventListener('exit-vr', function (evt) {
+        posy = 3;
+        io.object3D.position.y = posy;
+            vaiGiu = posy - 1.3;
+
+    });
+
+</script>
+
+    </body>
+
+</html>
+
+
+
+
